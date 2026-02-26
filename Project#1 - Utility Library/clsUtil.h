@@ -1,0 +1,224 @@
+#pragma once
+#include <iostream>
+#include "clsDate.h"
+
+using namespace std;
+class clsUtil
+{
+
+public:
+	enum enCharType {
+		SamallLetter = 1, CapitalLetter = 2,
+		Digit = 3, MixChars = 4, SpecialCharacter = 5
+	};
+
+	static void Srand() {
+		srand((unsigned)time(NULL));
+	}
+
+	static int RandomNumber(int From, int To) {
+		return rand()%(To - From + 1) + From;
+	}
+    static char GetRandomCharacter(enCharType CharType)
+    {
+
+        
+        if (CharType == MixChars)
+        {
+            
+            CharType = (enCharType)RandomNumber(1, 3);
+
+        }
+
+        switch (CharType)
+        {
+
+        case enCharType::SamallLetter:
+        {
+            return char(RandomNumber(97, 122));
+            break;
+        }
+        case enCharType::CapitalLetter:
+        {
+            return char(RandomNumber(65, 90));
+            break;
+        }
+        case enCharType::SpecialCharacter:
+        {
+            return char(RandomNumber(33, 47));
+            break;
+        }
+        case enCharType::Digit:
+        {
+            return char(RandomNumber(48, 57));
+            break;
+        }
+        default:
+        {
+            return char(RandomNumber(65, 90));
+            break;
+        }
+        }
+    }
+
+
+    static string GenerateWord(enCharType CharType, short Length) {
+        string Word;
+
+        for (int i = 0; i < Length; i++) {
+            Word += GetRandomCharacter(CharType);
+        }
+        return Word;
+    }
+
+    static string GenerateKey(enCharType CharType, short PartLength,short KeyLength) {
+        string Key;
+        bool FirstPart = true;
+        for (int i = 0; i < KeyLength; i++) {
+           
+            Key += FirstPart ? GenerateWord(CharType, PartLength) :
+                "-" + GenerateWord(CharType, PartLength);
+            FirstPart = false;
+        }
+
+        return Key;
+    }
+
+    static vector <string> GenerateKeys(short NumberOfKeys, enCharType CharType, short PartLength, short KeyLength) {
+        
+        vector <string> vKeys;
+
+        for (int i = 0; i < NumberOfKeys; i++) {
+
+            vKeys.push_back(GenerateKey(CharType, PartLength, KeyLength));
+        }
+        return vKeys;
+    }
+
+
+    static void FillArrayWithRandomNumbers(int arr[100], int arrLength, int From, int To) {
+    
+        for (int i = 0; i < arrLength; i++) {
+            arr[i] = RandomNumber(From, To);
+        }
+    }
+
+    static void FillArrayWithRandomWords(string arr[100], int arrLength, enCharType CharType, short Wordlength) {
+        
+        for (int i = 0; i < arrLength; i++) {
+
+            arr[i] = GenerateWord(CharType, Wordlength);
+        }
+    }
+
+
+    static void FillArrayWithRandomKeys(string arr[100], int arrLength, enCharType CharType,short PartLength,short KeyLength) {
+        
+        for (int i = 0; i < arrLength; i++) {
+            arr[i] = GenerateKey(CharType, PartLength, KeyLength);
+
+        }
+    }
+
+    static void Swap(int& A, int& B) {
+        A = A + B;
+        B = A - B;
+        A = A - B;
+    }
+
+    static void Swap(double& A, double& B) {
+        A = A + B;
+        B = A - B;
+        A = A - B;
+    }
+
+    static void Swap(bool& A, bool& B) {
+        bool Temp;
+
+        Temp = A;
+        A = B;
+        B = Temp;
+    }
+
+    static void Swap(char& A, char& B) {
+        char Temp;
+        Temp = A;
+        A = B;
+        B = Temp;
+    }
+
+    static void Swap(string& A, string& B) {
+        string Temp;
+
+        Temp = A;
+        A = B;
+        B = Temp;
+    }
+
+    static  void Swap(clsDate& A, clsDate& B)
+    {
+        clsDate::SwapDates(A, B);
+
+    }
+
+    static void ShuffleArray(int arr[100], int arrLength) {
+    
+        for (int i = 0; i < arrLength; i++) {
+            int j = RandomNumber(0, arrLength-1);
+            Swap(arr[i], arr[j]);
+        }
+    }
+
+    static void ShuffleArray(string arr[100], int arrLength) {
+        for (int i = 0; i < arrLength; i++) {
+            int j = RandomNumber(0, arrLength - 1);
+            Swap(arr[i], arr[j]);
+        }
+    }
+
+
+    static string  Tabs(short NumberOfTabs)
+    {
+        string t = "";
+
+        for (int i = 1; i < NumberOfTabs; i++)
+        {
+            t = t + "\t";
+            cout << t;
+        }
+        return t;
+
+    }
+
+    static string  EncryptText(string Text, short EncryptionKey)
+    {
+
+        for (int i = 0; i <= Text.length(); i++)
+        {
+
+            Text[i] = char((int)Text[i] + EncryptionKey);
+
+        }
+
+        return Text;
+
+    }
+
+    static string  DecryptText(string Text, short EncryptionKey)
+    {
+
+        for (int i = 0; i <= Text.length(); i++)
+        {
+
+            Text[i] = char((int)Text[i] - EncryptionKey);
+
+        }
+        return Text;
+
+    }
+
+
+
+
+};
+
