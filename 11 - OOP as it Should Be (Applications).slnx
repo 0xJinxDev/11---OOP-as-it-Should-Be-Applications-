@@ -3,5 +3,7 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Project#1 - Utility Library/Project#1 - Utility Library.vcxproj" />
+  <Project Path="Project#1 - Utility Library/Project#1 - Utility Library.vcxproj" Id="44b090b9-1bd9-434e-8047-88f26d0b2620" />
+  <Project Path="Project#2 - Input and Validation Library/Project#2 - Input and Validation Library.vcxproj" Id="df9adccf-7b42-4b50-a9f8-2a8fdfa720f1" />
+  <Project Path="Project#3 - Bank System/Project#3 - Bank System.vcxproj" Id="c3599aa9-5402-4a71-9a6f-f673116fba0c" />
 </Solution>

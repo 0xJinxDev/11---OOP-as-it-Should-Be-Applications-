@@ -1,5 +1,8 @@
 #pragma once
 #include "clsPerson.h"
+#include <vector>
+#include <fstream>
+
 class clsBankClient : public clsPerson
 {
 private:
