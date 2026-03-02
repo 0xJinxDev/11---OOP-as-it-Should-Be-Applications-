@@ -211,6 +211,17 @@ public:
         _LoadFileToVector();
         return _vClients;
     }
-   
+
+                  
+    static double getTotalBalances() {
+        double TotalBalances = 0;
+
+        _LoadFileToVector();
+
+        for (const clsBankClient& Client : _vClients) {
+            TotalBalances += Client.getBalance();
+        }
+        return TotalBalances;
+    }
 };
 
