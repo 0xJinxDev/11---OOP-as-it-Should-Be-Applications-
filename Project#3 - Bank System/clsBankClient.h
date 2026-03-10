@@ -21,8 +21,12 @@ private:
 
     static clsBankClient _ConvertLineToClientObject(const string& Line) {
         vector <string> vClientInfo = clsString::SeperateWords(Line, _Delim);
-        return clsBankClient(UpdateMode, vClientInfo[0], vClientInfo[1], vClientInfo[2], vClientInfo[3],
-            vClientInfo[4], vClientInfo[5], stod(vClientInfo[6]));
+        if (vClientInfo.size() >= 7) {
+            return clsBankClient(UpdateMode, vClientInfo[0], vClientInfo[1], vClientInfo[2], vClientInfo[3],
+                vClientInfo[4], vClientInfo[5], stod(vClientInfo[6]));
+        }
+      
+        return _ReturnEmptyClientObject();
 
     }
 
@@ -35,8 +39,10 @@ private:
         if (MyFile.is_open()) {
 
             while (getline(MyFile, line)) {
-
-                _vClients.push_back(_ConvertLineToClientObject(line));
+                if (line != "") {
+                    _vClients.push_back(_ConvertLineToClientObject(line));
+                }
+                
             }
             MyFile.close();
         }
@@ -83,23 +89,26 @@ private:
     }
 
     void _UpdateFile(bool Overwrite) {
-        
-        bool WrittenToFile = false;
-        for (const clsBankClient& Client : _vClients) {
-            if (!Client._MarkToDelete) {
-                string line = _ObjectToLine(Client);
-                _SaveLineToFile(line, Overwrite);
-                Overwrite = false;
-                WrittenToFile = true;
-           }
 
-            if (!WrittenToFile) {
-                _SaveLineToFile("",true);
-            }
-         
+        _vClients.erase(
+            remove_if(_vClients.begin(), _vClients.end(),
+                [](clsBankClient& Client) {
+                    return Client._MarkToDelete;
+                }),
+            _vClients.end()
+        );
+
+        if (_vClients.empty()) {
+            _SaveLineToFile("", true);
+            return;
         }
-  
+
+        for (clsBankClient& Client : _vClients) {
+            _SaveLineToFile(_ObjectToLine(Client), Overwrite);
+            Overwrite = false;
+        }
     }
+
     void _UpdateClient() {
         
 
@@ -148,17 +157,7 @@ public:
     string getFullName() const { return getFirstName()+ " "+getLastName(); }
     float getBalance() const { return _Balance; }
 
-    void Print() const {
-        cout << "\n\nClient Information:";
-        cout << "\nFirst name:    " << getFirstName();
-        cout << "\nLast name:     " << getLastName();
-        cout << "\nEmail:         " << getEmail();
-        cout << "\nPhone:         " << getPhone();
-        cout << "\nAccount number:" << _AccountNumber;
-        cout << "\nPIN:           " << _PINCode;
-        cout << "\nBalance:       " << _Balance;
-        cout << endl;
-    }
+ 
 
     static clsBankClient Find(const string& AccountNumber) {
         

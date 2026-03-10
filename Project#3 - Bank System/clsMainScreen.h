@@ -1,8 +1,12 @@
 #pragma once
+#include <iomanip>
 #include "clsBankClient.h"
 #include "clsInputValidate.h"
 #include "clsScreen.h"
-#include <iomanip>
+#include "clsClientsListScreen.h"
+#include "clsAddNewClientScreen.h"
+#include "clsDeleteClientScreen.h"
+
 
 using namespace std;
 class clsMainScreen  : protected clsScreen
@@ -30,20 +34,20 @@ private:
     }
     static void _ShowAllClientsScreen()
     {
-        cout << "\nClient List Screen Will be here...\n";
+        clsClientsListScreen::ShowClientsList();
 
 
     }
 
     static void _ShowAddNewClientsScreen()
     {
-        cout << "\nAdd New Client Screen Will be here...\n";
+        clsAddNewClientScreen::ShowAddNewClientScreen();
 
     }
 
     static void _ShowDeleteClientScreen()
     {
-        cout << "\nDelete Client Screen Will be here...\n";
+        clsDeleteClientScreen::ShowDeleteClient();
 
     }
 
