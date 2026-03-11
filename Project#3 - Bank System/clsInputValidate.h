@@ -126,5 +126,21 @@ public:
 		getline(cin >> ws, S1);
 		return S1;
 	}
+	static char ReadChar(const string& Message) {
+
+		string input;
+
+		while (true) {
+			cout << Message << endl;
+			cin >> input;
+
+			if (input.length() == 1 && isalpha(input[0])) {
+				return input[0];
+			}
+			else {
+				cout << "Invalid input, please enter a single character." << endl;
+			}
+		}
+	}
 };
 
