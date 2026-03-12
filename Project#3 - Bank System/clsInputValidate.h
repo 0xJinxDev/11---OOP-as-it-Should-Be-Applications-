@@ -46,7 +46,27 @@ public:
 		return Number;
 	}
 
+	static int ReadIntNumberGreaterThan(int GreaterThan, const string& Message)
+	{
+		int number;
 
+		do {
+			cout << Message << endl;
+			number = ReadIntNumber();
+		} while (number <= GreaterThan);
+
+		return number;
+	}
+	static double ReadDoubleNumberGreatertThan(double GreaterThan, const string& Message) {
+		double number;
+		do {
+			cout << Message << endl;
+			number = ReadDblNumber();
+			if (number <= GreaterThan)
+				cout << "Please enter amount greater than " << GreaterThan <<endl;
+		} while (number <= GreaterThan);
+		return number;
+	}
 	static short ReadShortNumber(string ErrorMessage = "Invalid Number, Enter again\n")
 	{
 		short Number;

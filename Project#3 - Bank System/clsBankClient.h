@@ -222,5 +222,15 @@ public:
         }
         return TotalBalances;
     }
-};
 
+     bool Deposit(double amount) {
+
+        return (amount > 0) ? (_Balance += amount, _UpdateClient(), true) : false;
+    }
+
+     bool Withdraw(double amount) {
+         return (amount > 0 && amount <= _Balance) ? (_Balance -= amount, _UpdateClient(), true) : false;
+     }
+
+
+};
