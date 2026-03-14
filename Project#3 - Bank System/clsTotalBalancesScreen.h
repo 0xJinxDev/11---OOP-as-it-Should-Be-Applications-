@@ -4,7 +4,7 @@
 #include "clsInputValidate.h"
 #include <iomanip>
 
-class clsTotalBalancesScreen
+class clsTotalBalancesScreen : protected clsScreen
 {
 private:
 
@@ -19,6 +19,8 @@ private:
 public:
 
 	static void ShowTotalBalances() {
+
+		_DrawScreenHeader("All Balances");
 		vector <clsBankClient> vClients = clsBankClient::GetClientsList();
 
 		cout << "\n\t\t\t\t\tBalances List (" << vClients.size() << ") Client(s).";
