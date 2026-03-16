@@ -19,7 +19,7 @@ private:
 public:
 
 	static void ShowTotalBalances() {
-
+		system("cls");
 		_DrawScreenHeader("All Balances");
 		vector <clsBankClient> vClients = clsBankClient::GetClientsList();
 

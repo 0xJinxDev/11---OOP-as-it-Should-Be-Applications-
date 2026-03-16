@@ -35,13 +35,16 @@ public:
 				(clsDate::IsDate1BeforeDate2(Date, Date1) || clsDate::IsDate1EqualsDate2(Date, Date1)));
 	}
 
-	static int ReadIntNumber(string ErrorMessage = "Invalid Number, Enter again\n")
+	static int ReadIntNumber(const string& Message="", const string& ErrorMessage = "Invalid Number, Enter again\n")
 	{
 		int Number;
+		cout << Message << endl;
 		while (!(cin >> Number)) {
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			
 			cout << ErrorMessage;
+			cout << Message << endl;
 		}
 		return Number;
 	}

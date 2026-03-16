@@ -21,7 +21,7 @@ private:
 
     static clsBankClient _ConvertLineToClientObject(const string& Line) {
         vector <string> vClientInfo = clsString::SeperateWords(Line, _Delim);
-        if (vClientInfo.size() >= 7) {
+        if (vClientInfo.size() == 7) {
             return clsBankClient(UpdateMode, vClientInfo[0], vClientInfo[1], vClientInfo[2], vClientInfo[3],
                 vClientInfo[4], vClientInfo[5], stod(vClientInfo[6]));
         }

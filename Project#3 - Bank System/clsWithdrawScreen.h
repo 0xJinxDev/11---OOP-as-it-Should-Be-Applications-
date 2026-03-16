@@ -30,7 +30,7 @@ private:
 public:
 
     static void ShowWithdrawScreen() {
-
+        system("cls");
         _DrawScreenHeader("Withdraw");
 
         string AccountNumber = "";
