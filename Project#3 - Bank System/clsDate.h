@@ -144,4 +144,8 @@ public:
 		short Days = DaysInAMonth(Date._Date);
 		return (Days != 0 && Date._Date.Day >= 1 && Date._Date.Day <= Days);
 	}
+
+	static string DateToString(clsDate Date) {
+		return to_string(Date._Date.Day) + "/" + to_string(Date._Date.Month) + "/" + to_string(Date._Date.Year);
+	}
 };
