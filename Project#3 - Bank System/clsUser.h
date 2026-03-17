@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 class clsUser : public clsPerson
@@ -184,9 +185,9 @@ public:
 
         return _FindUser(Username);
     }
-    static clsUser Find(const string& Username, const string& PIN) {
+    static clsUser Find(const string& Username, const string& Password) {
 
-        return _FindUser(Username, PIN, true);
+        return _FindUser(Username, Password, true);
     }
     static bool isUserExist(const string& Username) {
 

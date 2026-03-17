@@ -3,6 +3,7 @@
 #include <iostream>
 #include "clsString.h"
 #include <string>
+#include <ctime>
 
 using namespace std;
 class clsDate

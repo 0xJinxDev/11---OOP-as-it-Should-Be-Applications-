@@ -1,6 +1,9 @@
 #pragma once
 #include "clsDate.h"
 #include <iostream>
+#include <string>
+#include <limits>
+
 using namespace std;
 class clsInputValidate
 {

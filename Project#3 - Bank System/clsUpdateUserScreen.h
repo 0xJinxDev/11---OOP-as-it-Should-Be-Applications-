@@ -3,9 +3,8 @@
 #include "clsUser.h"
 #include "clsInputValidate.h"
 
-class clsAddNewUserScreen : protected clsScreen
+class clsUpdateUserScreen : protected clsScreen
 {
-
 private:
 
 	static short _ReadPrivileges()
@@ -35,23 +34,23 @@ private:
 
 			switch (choice)
 			{
-			case 1: permission = clsUser::enPermissions::pShowClientList; break;
-			case 2: permission = clsUser::enPermissions::pAddNewClient; break;
-			case 3: permission = clsUser::enPermissions::pDeleteClient; break;
-			case 4: permission = clsUser::enPermissions::pUpdateClient; break;
-			case 5: permission = clsUser::enPermissions::pFindClient; break;
-			case 6: permission = clsUser::enPermissions::pTransactions; break;
-			case 7: permission = clsUser::enPermissions::pManageUsers; break;
+			case 1: permission = clsUser::pShowClientList; break;
+			case 2: permission = clsUser::pAddNewClient; break;
+			case 3: permission = clsUser::pDeleteClient; break;
+			case 4: permission = clsUser::pUpdateClient; break;
+			case 5: permission = clsUser::pFindClient; break;
+			case 6: permission = clsUser::pTransactions; break;
+			case 7: permission = clsUser::pManageUsers; break;
 
 			case 8:
 				privileges =
-					clsUser::enPermissions::pShowClientList |
-					clsUser::enPermissions::pAddNewClient |
-					clsUser::enPermissions::pDeleteClient |
-					clsUser::enPermissions::pUpdateClient |
-					clsUser::enPermissions::pFindClient |
-					clsUser::enPermissions::pTransactions |
-					clsUser::enPermissions::pManageUsers;
+					clsUser::pShowClientList |
+					clsUser::pAddNewClient |
+					clsUser::pDeleteClient |
+					clsUser::pUpdateClient |
+					clsUser::pFindClient |
+					clsUser::pTransactions |
+					clsUser::pManageUsers;
 
 				cout << "All permissions granted!\n";
 				return privileges;
@@ -80,7 +79,6 @@ private:
 		return privileges;
 	}
 
-
 	static void _ReadUserInfo(clsUser& User)
 	{
 		User.setFirstName(clsInputValidate::ReadString("Please enter first name:"));
@@ -107,41 +105,38 @@ private:
 
 public:
 
-	static void ShowAddNewUserScreen()
+	static void ShowUpdateUserScreen()
 	{
+		_DrawScreenHeader("Update User");
 
-		_DrawScreenHeader("Add New User");
+		string Username = clsInputValidate::ReadString("Please enter username:");
 
-		string UserName = "";
-
-		UserName = clsInputValidate::ReadString("Please enter username:");
-
-		while (clsUser::isUserExist(UserName))
+		while (!clsUser::isUserExist(Username))
 		{
-			cout << "Username is already in use!\n";
-			UserName = clsInputValidate::ReadString("Please enter username:");
+			cout << "User not found!\n";
+			Username = clsInputValidate::ReadString("Please enter username:");
 		}
 
-		clsUser NewUser = clsUser::GetAddNewUserObject(UserName);
+		clsUser User = clsUser::Find(Username);
 
-		_ReadUserInfo(NewUser);
+		cout << "\nCurrent User Info:\n";
+		_PrintUser(User);
 
-		clsUser::enSaveResult SaveResult = NewUser.Save();
+		cout << "\n\nEnter new information:\n";
+		_ReadUserInfo(User);
+
+		clsUser::enSaveResult SaveResult = User.Save();
 
 		switch (SaveResult)
 		{
-
 		case clsUser::Success:
-			cout << "User Added Successfully!\n";
-			_PrintUser(NewUser);
+			cout << "\nUser Updated Successfully!\n";
+			_PrintUser(User);
 			break;
 
-		case clsUser::UserAlreadyExist:
-			cout << "User with this username already exists.\n";
+		case clsUser::FailedEmptyObject:
+			cout << "\nError: Update failed.\n";
 			break;
-
 		}
-
 	}
-
 };

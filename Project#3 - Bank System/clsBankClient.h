@@ -4,6 +4,9 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <algorithm>
+
+using namespace std;
 class clsBankClient : public clsPerson
 {
 private:
