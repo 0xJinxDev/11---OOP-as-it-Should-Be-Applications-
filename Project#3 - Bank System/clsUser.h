@@ -233,5 +233,14 @@ public:
         _LoadFileToVector();
         return _vUsers;
     }
+    bool CheckAccessPermission(enPermissions Permission)
+    {
+        if (this->getPermissions() == -1)
+        {
+            return true;
+        }
+
+        return ((this->getPermissions() & Permission) == Permission);
+    }
 };
 

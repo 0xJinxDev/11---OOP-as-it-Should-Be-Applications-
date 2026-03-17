@@ -84,42 +84,88 @@ private:
 
     }
 
-    static void _PerformMainMenuOption(enMainMenuOption MainMenuOption) {
+    static void _PerformMainMenuOption(enMainMenuOption MainMenuOption)
+    {
+        switch (MainMenuOption)
+        {
+        case eListClients:
+            if (!CheckAccessRights(clsUser::pShowClientList)) { _GoBackToMainMenu(); return; }
+            system("cls"); _ShowAllClientsScreen(); _GoBackToMainMenu(); break;
 
-        switch (MainMenuOption) {
+        case eAddNewClient:
+            if (!CheckAccessRights(clsUser::pAddNewClient)) { _GoBackToMainMenu(); return; }
+            system("cls"); _ShowAddNewClientsScreen(); _GoBackToMainMenu(); break;
 
-        case eListClients: system("cls"); _ShowAllClientsScreen(); _GoBackToMainMenu(); break;
-        case eAddNewClient: system("cls"); _ShowAddNewClientsScreen(); _GoBackToMainMenu(); break;
-        case eDeleteClient: system("cls"); _ShowDeleteClientScreen(); _GoBackToMainMenu(); break;
-        case eUpdateClient: system("cls"); _ShowUpdateClientScreen(); _GoBackToMainMenu(); break;
-        case eFindClient: system("cls"); _ShowFindClientScreen(); _GoBackToMainMenu(); break;
-        case eShowTransactionsMenu: system("cls"); _ShowTransactionsMenu(); _GoBackToMainMenu(); break;
-        case eManageUsers: system("cls"); _ShowManageUsersMenu(); _GoBackToMainMenu(); break;
-        case eExit: system("cls"); _Logout(); break;
+        case eDeleteClient:
+            if (!CheckAccessRights(clsUser::pDeleteClient)) { _GoBackToMainMenu(); return; }
+            system("cls"); _ShowDeleteClientScreen(); _GoBackToMainMenu(); break;
+
+        case eUpdateClient:
+            if (!CheckAccessRights(clsUser::pUpdateClient)) { _GoBackToMainMenu(); return; }
+            system("cls"); _ShowUpdateClientScreen(); _GoBackToMainMenu(); break;
+
+        case eFindClient:
+            if (!CheckAccessRights(clsUser::pFindClient)) { _GoBackToMainMenu(); return; }
+            system("cls"); _ShowFindClientScreen(); _GoBackToMainMenu(); break;
+
+        case eShowTransactionsMenu:
+            if (!CheckAccessRights(clsUser::pTransactions)) { _GoBackToMainMenu(); return; }
+            system("cls"); _ShowTransactionsMenu(); _GoBackToMainMenu(); break;
+
+        case eManageUsers:
+            if (!CheckAccessRights(clsUser::pManageUsers)) { _GoBackToMainMenu(); return; }
+            system("cls"); _ShowManageUsersMenu(); _GoBackToMainMenu(); break;
+
+        case eExit:
+            system("cls"); _Logout(); break;
         }
     }
 
 public:
 
-	static void ShowMainMenu() {
-		system("cls");
-		_DrawScreenHeader("\t\tMain Screen");
+    static void ShowMainMenu()
+    {
+        system("cls");
+        _DrawScreenHeader("\t\tMain Screen");
 
         cout << setw(37) << left << "" << "===========================================\n";
         cout << setw(37) << left << "" << "\t\t\tMain Menu\n";
         cout << setw(37) << left << "" << "===========================================\n";
-        cout << setw(37) << left << "" << "\t[1] Show Client List.\n";
-        cout << setw(37) << left << "" << "\t[2] Add New Client.\n";
-        cout << setw(37) << left << "" << "\t[3] Delete Client.\n";
-        cout << setw(37) << left << "" << "\t[4] Update Client Info.\n";
-        cout << setw(37) << left << "" << "\t[5] Find Client.\n";
-        cout << setw(37) << left << "" << "\t[6] Transactions.\n";
-        cout << setw(37) << left << "" << "\t[7] Manage Users.\n";
+
+        if (CurrentUser.CheckAccessPermission(clsUser::pShowClientList))
+        {
+            cout << setw(37) << left << "" << "\t[1] Show Client List.\n";
+        }
+        if (CurrentUser.CheckAccessPermission(clsUser::pAddNewClient))
+        {
+            cout << setw(37) << left << "" << "\t[2] Add New Client.\n";
+        }
+        if (CurrentUser.CheckAccessPermission(clsUser::pDeleteClient))
+        {
+            cout << setw(37) << left << "" << "\t[3] Delete Client.\n";
+        }
+        if (CurrentUser.CheckAccessPermission(clsUser::pUpdateClient))
+        {
+            cout << setw(37) << left << "" << "\t[4] Update Client Info.\n";
+        }
+        if (CurrentUser.CheckAccessPermission(clsUser::pFindClient))
+        {
+            cout << setw(37) << left << "" << "\t[5] Find Client.\n";
+        }
+        if (CurrentUser.CheckAccessPermission(clsUser::pTransactions))
+        {
+            cout << setw(37) << left << "" << "\t[6] Transactions.\n";
+        }
+        if (CurrentUser.CheckAccessPermission(clsUser::pManageUsers))
+        {
+            cout << setw(37) << left << "" << "\t[7] Manage Users.\n";
+        }
+
         cout << setw(37) << left << "" << "\t[8] Logout.\n";
         cout << setw(37) << left << "" << "===========================================\n";
 
         _PerformMainMenuOption((enMainMenuOption)_ReadMainMenuOptions());
 
-	}
+    }
 };
 
