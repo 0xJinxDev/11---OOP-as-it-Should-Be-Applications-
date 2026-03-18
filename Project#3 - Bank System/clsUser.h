@@ -1,6 +1,7 @@
 #pragma once
 #include "clsPerson.h"
 #include "clsString.h"
+#include "clsDate.h"
 #include <vector>
 #include <fstream>
 #include <string>
@@ -21,6 +22,7 @@ private:
     inline static vector <clsUser> _vUsers;
     inline static const string _Delim = "/##/";
     inline static const string _UsersFileName = "Users.txt";
+    inline static const string _LoginLogsFileName = "LoginLogs.txt";
 
     static clsUser _ConvertLineToObject(const string& Line) {
         vector <string> vUserInfo = clsString::SeperateWords(Line, _Delim);
@@ -48,9 +50,9 @@ private:
 
         return line;
     }
-    void _SaveLineToFile(const string& Line ,bool OverWrite) {
+    void _SaveLineToFile(const string& FileName,const string& Line ,bool OverWrite) {
 
-        fstream MyFile(_UsersFileName, OverWrite ? ios::out : ios::out | ios::app);
+        fstream MyFile(FileName, OverWrite ? ios::out : ios::out | ios::app);
 
         if (MyFile.is_open()) {
             MyFile << Line << endl;
@@ -100,13 +102,13 @@ private:
 
         if (_vUsers.empty())
         {
-            _SaveLineToFile("", true);
+            _SaveLineToFile(_UsersFileName,"", true);
             return;
         }
 
         for (clsUser& User : _vUsers)
         {
-            _SaveLineToFile(_ConvertObjectToLine(User), Overwrite);
+            _SaveLineToFile(_UsersFileName,_ConvertObjectToLine(User), Overwrite);
             Overwrite = false;
         }
     }
@@ -125,10 +127,20 @@ private:
 
     void _AddNewUser() {
         string line = _ConvertObjectToLine(*this);
-        _SaveLineToFile(line, false);
+        _SaveLineToFile(_UsersFileName,line, false);
         _Mode = UpdateMode;
         _vUsers.push_back(*this);
 
+    }
+    string _PrepareLogingLogRecord() {
+
+        string Record="";
+
+        Record += clsDate::GetSystemDateTimeString() + _Delim;
+        Record += _UserName + _Delim;
+        Record += to_string(_Permissions);
+
+        return Record;
     }
 public:
 
@@ -241,6 +253,11 @@ public:
         }
 
         return ((this->getPermissions() & Permission) == Permission);
+    }
+
+    void LogLogin() {
+        string Record = _PrepareLogingLogRecord();
+        _SaveLineToFile(_LoginLogsFileName, Record, false);
     }
 };
 
