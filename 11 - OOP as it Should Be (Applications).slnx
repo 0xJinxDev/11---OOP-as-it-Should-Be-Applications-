@@ -6,4 +6,6 @@
   <Project Path="Project#1 - Utility Library/Project#1 - Utility Library.vcxproj" Id="44b090b9-1bd9-434e-8047-88f26d0b2620" />
   <Project Path="Project#2 - Input and Validation Library/Project#2 - Input and Validation Library.vcxproj" Id="df9adccf-7b42-4b50-a9f8-2a8fdfa720f1" />
   <Project Path="Project#3 - Bank System/Project#3 - Bank System.vcxproj" Id="c3599aa9-5402-4a71-9a6f-f673116fba0c" />
+  <Project Path="Template Classes/Template Classes.vcxproj" Id="e84cf91e-cd75-4f4c-91c6-329c30370e1f" />
+  <Project Path="Template Functions/Template Functions.vcxproj" Id="aa311885-0963-4ac6-9e48-54f8b288bb7f" />
 </Solution>
